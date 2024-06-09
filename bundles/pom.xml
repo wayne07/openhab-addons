@@ -123,7 +123,7 @@
     <module>org.openhab.binding.echonetlite</module>
     <module>org.openhab.binding.ecobee</module>
     <module>org.openhab.binding.ecotouch</module>
-    <module>org.openhab.binding.ecovacs</module>
+    <!-- <module>org.openhab.binding.ecovacs</module> does not compile -->
     <module>org.openhab.binding.ecowatt</module>
     <module>org.openhab.binding.ekey</module>
     <module>org.openhab.binding.electroluxair</module>
@@ -291,6 +291,7 @@
     <module>org.openhab.binding.nuvo</module>
     <module>org.openhab.binding.nzwateralerts</module>
     <module>org.openhab.binding.oceanic</module>
+    <module>org.openhab.binding.oilfoxng</module>
     <module>org.openhab.binding.ojelectronics</module>
     <module>org.openhab.binding.omnikinverter</module>
     <module>org.openhab.binding.omnilink</module>
