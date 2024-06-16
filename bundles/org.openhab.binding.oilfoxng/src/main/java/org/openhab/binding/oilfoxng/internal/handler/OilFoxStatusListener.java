@@ -19,7 +19,7 @@ import com.google.gson.JsonArray;
 /**
  * The {@link OilFoxStatusListener} is the interface definition for listening on commands.
  *
- * @author Jürgen Seliger
+ * @author Jürgen Seliger - Initial contribution
  */
 public interface OilFoxStatusListener {
 

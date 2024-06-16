@@ -48,7 +48,7 @@ import com.google.gson.JsonParser;
 /**
  * The {@link OilFoxBridgeHandler} is responsible for handling commands, which are sent to the bridge.
  *
- * @author Jürgen Seliger
+ * @author Jürgen Seliger - Initial contribution
  */
 public class OilFoxBridgeHandler extends BaseBridgeHandler {
 

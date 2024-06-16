@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The {@link OilFoxHandler} is responsible for handling commands, which are sent to one of the channels.
  *
- * @author Jürgen Seliger
+ * @author Jürgen Seliger - Initial contribution
  */
 // public class OilFoxHandler extends BaseThingHandler implements OilFoxStatusListener {
 public class OilFoxHandler extends BaseThingHandler {

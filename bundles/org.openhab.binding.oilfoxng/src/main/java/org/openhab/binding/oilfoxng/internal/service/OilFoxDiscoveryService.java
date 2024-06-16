@@ -37,7 +37,7 @@ import com.google.gson.JsonArray;
 /**
  * The {@link OilFoxDiscoveryService} is responsible for discovering the oilfox.
  *
- * @author Jürgen Seliger
+ * @author Jürgen Seliger - Initial contribution
  */
 public class OilFoxDiscoveryService extends AbstractDiscoveryService implements OilFoxStatusListener {
 
