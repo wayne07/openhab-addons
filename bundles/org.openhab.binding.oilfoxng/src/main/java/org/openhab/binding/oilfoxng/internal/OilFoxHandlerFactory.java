@@ -32,6 +32,8 @@ import org.openhab.core.thing.binding.ThingHandler;
 import org.openhab.core.thing.binding.ThingHandlerFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link OilFoxHandlerFactory} is responsible for creating things and thing handlers.
@@ -42,6 +44,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(configurationPid = "binding.oilfoxng", service = ThingHandlerFactory.class)
 public class OilFoxHandlerFactory extends BaseThingHandlerFactory {
 
+    private final Logger logger = LoggerFactory.getLogger(OilFoxHandlerFactory.class);
+
     private Map<ThingUID, ServiceRegistration<?>> discoveryServiceRegs = new HashMap<>();
 
     @Override
@@ -51,14 +55,19 @@ public class OilFoxHandlerFactory extends BaseThingHandlerFactory {
 
     @Override
     protected @Nullable ThingHandler createHandler(Thing thing) {
+        logger.info("createHandler for {}", thing);
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
+        logger.info("found thingTypeUID {}", thingTypeUID);
         if (OilFoxBindingConstants.SUPPORTED_BRIDGE_TYPES.contains(thingTypeUID)) {
+            logger.info("creating Bridge handler");
             OilFoxBridgeHandler bridgeHandler = new OilFoxBridgeHandler((Bridge) thing);
             registerOilFoxDiscoveryService(bridgeHandler);
             return bridgeHandler;
         } else if (thingTypeUID.equals(OilFoxBindingConstants.THING_TYPE_OILFOX)) {
+            logger.info("creating OilFox handler");
             return new OilFoxHandler(thing);
         }
+        logger.info("creating NO handler");
         return null;
     }
 
