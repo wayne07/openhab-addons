@@ -47,7 +47,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * The {@link OilFoxBridgeHandler} is responsible for handling commands, which are sent to the bridge.
+ * The {@link OilFoxBridgeHandler} is the api service of oilfox.io in the cloud.
  *
  * @author Jürgen Seliger - Initial contribution
  */
@@ -67,7 +67,7 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
     @Override
     public void initialize() {
-        logger.info("initializing OilFoxBridgeHandler..");
+        logger.warn("initializing OilFoxBridgeHandler..");
         config = getConfigAs(OilFoxConfiguration.class);
         synchronized (this) {
             // cancel old job
@@ -75,15 +75,15 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
                 refreshJob.cancel(false);
             }
 
-            String token = thing.getProperties().get(OilFoxBindingConstants.PROPERTY_TOKEN);
-            logger.info("Token {}", token);
+            String token = thing.getProperties().get(OilFoxBindingConstants.PROPERTY_ACCESS_TOKEN);
+            logger.debug("Token {}", token);
             if (token == null || token.isEmpty()) {
                 login();
             } else {
                 updateStatus(ThingStatus.ONLINE);
             }
 
-            refreshJob = scheduler.scheduleWithFixedDelay(this::ReadStatus, 0, config.refreshInterval, TimeUnit.HOURS);
+            refreshJob = scheduler.scheduleWithFixedDelay(this::readStatus, 0, config.refreshInterval, TimeUnit.HOURS);
         }
     }
 
@@ -95,11 +95,34 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
     // ******** communication with OilFox Cloud
 
-    protected JsonElement Query(String address) throws MalformedURLException, IOException {
+    private void login() {
+        try {
+            logger.debug("logging in to {}", config.hostname);
+            JsonObject requestObject = new JsonObject();
+            requestObject.addProperty("email", config.email);
+            requestObject.addProperty("password", config.password);
+
+            JsonElement responseObject = Query("/v2/backoffice/session", requestObject);
+
+            if (responseObject.isJsonObject()) {
+                JsonObject object = responseObject.getAsJsonObject();
+                String token = object.get("token").getAsString();
+                logger.debug("using Token '{}' ", token);
+                thing.setProperty(OilFoxBindingConstants.PROPERTY_ACCESS_TOKEN, token);
+            }
+
+            updateStatus(ThingStatus.ONLINE);
+        } catch (IOException e) {
+            logger.error("Exception occurred during execution: {}", e.getMessage(), e);
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
+        }
+    }
+
+    private JsonElement Query(String address) throws MalformedURLException, IOException {
         return Query(address, JsonNull.INSTANCE);
     }
 
-    protected JsonElement Query(String path, JsonElement requestObject) throws IOException {
+    private JsonElement Query(String path, JsonElement requestObject) throws IOException {
         URL url = new URL("https://" + config.hostname + path);
         logger.info("Query({})", url.toString());
         HttpsURLConnection request = (HttpsURLConnection) url.openConnection();
@@ -112,7 +135,7 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
                 throw new IOException("Not logged in");
             }
 
-            String token = thing.getProperties().get(OilFoxBindingConstants.PROPERTY_TOKEN);
+            String token = thing.getProperties().get(OilFoxBindingConstants.PROPERTY_ACCESS_TOKEN);
             request.setRequestProperty("X-Auth-Token", token);
         } else {
             request.setRequestMethod("POST");
@@ -139,28 +162,6 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
                 JsonElement element = parser.parse(reader);
                 reader.close();
                 return element;
-        }
-    }
-
-    private void login() {
-        try {
-            JsonObject requestObject = new JsonObject();
-            requestObject.addProperty("email", config.email);
-            requestObject.addProperty("password", config.password);
-
-            JsonElement responseObject = Query("/v2/backoffice/session", requestObject);
-
-            if (responseObject.isJsonObject()) {
-                JsonObject object = responseObject.getAsJsonObject();
-                String token = object.get("token").getAsString();
-                logger.debug("using Token '{}' ", token);
-                thing.setProperty(OilFoxBindingConstants.PROPERTY_TOKEN, token);
-            }
-
-            updateStatus(ThingStatus.ONLINE);
-        } catch (IOException e) {
-            logger.error("Exception occurred during execution: {}", e.getMessage(), e);
-            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
         }
     }
 
@@ -207,7 +208,7 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
         return oilFoxStatusListeners.remove(oilFoxStatusListener);
     }
 
-    private void ReadStatus() {
+    private void readStatus() {
         synchronized (this) {
             if (getThing().getStatus() == ThingStatus.OFFLINE) {
                 login();

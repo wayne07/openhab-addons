@@ -57,5 +57,6 @@ public class OilFoxBindingConstants {
     public static final String PROPERTY_VERSION = "version";
     public static final String PROPERTY_OILFOXID = "oilfoxId";
     public static final String PROPERTY_OILFOXHWID = "hardwareId";
-    public static final String PROPERTY_TOKEN = "token";
+    public static final String PROPERTY_ACCESS_TOKEN = "access_token";
+    public static final String PROPERTY_REFRESH_TOKEN = "refresh_token";
 }
