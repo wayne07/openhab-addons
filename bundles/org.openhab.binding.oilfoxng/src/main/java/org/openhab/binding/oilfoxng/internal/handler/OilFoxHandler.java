@@ -12,7 +12,7 @@
  */
 package org.openhab.binding.oilfoxng.internal.handler;
 
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.oilfoxng.OilFoxBindingConstants;
 import org.openhab.core.thing.Bridge;
 import org.openhab.core.thing.ChannelUID;
@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Jürgen Seliger - Initial contribution
  */
 // public class OilFoxHandler extends BaseThingHandler implements OilFoxStatusListener {
+@NonNullByDefault
 public class OilFoxHandler extends BaseThingHandler {
 
     private final Logger logger = LoggerFactory.getLogger(OilFoxHandler.class);
@@ -63,7 +64,7 @@ public class OilFoxHandler extends BaseThingHandler {
     }
 
     @Override
-    public void handleCommand(@NonNull ChannelUID channelUID, Command command) {
+    public void handleCommand(ChannelUID channelUID, Command command) {
     }
 
     // @Override

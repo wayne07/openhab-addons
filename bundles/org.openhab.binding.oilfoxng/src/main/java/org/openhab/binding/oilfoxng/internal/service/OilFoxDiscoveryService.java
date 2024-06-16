@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.oilfoxng.OilFoxBindingConstants;
 import org.openhab.binding.oilfoxng.internal.handler.OilFoxBridgeHandler;
 import org.openhab.binding.oilfoxng.internal.handler.OilFoxStatusListener;
@@ -39,13 +41,14 @@ import com.google.gson.JsonArray;
  *
  * @author Jürgen Seliger - Initial contribution
  */
+@NonNullByDefault
 public class OilFoxDiscoveryService extends AbstractDiscoveryService implements OilFoxStatusListener {
 
     private final Logger logger = LoggerFactory.getLogger(OilFoxDiscoveryService.class);
 
     private final static int TIMEOUT = 60;
 
-    private ServiceRegistration<?> reg = null;
+    private @Nullable ServiceRegistration<?> reg;
 
     private final OilFoxBridgeHandler bridgeHandler;
 

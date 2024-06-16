@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.oilfoxng.OilFoxBindingConstants;
 import org.openhab.binding.oilfoxng.internal.config.OilFoxConfiguration;
@@ -50,12 +51,13 @@ import com.google.gson.JsonParser;
  *
  * @author Jürgen Seliger - Initial contribution
  */
+@NonNullByDefault
 public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
     private final Logger logger = LoggerFactory.getLogger(OilFoxBridgeHandler.class);
 
-    private OilFoxConfiguration config;
-    private ScheduledFuture<?> refreshJob;
+    private @Nullable OilFoxConfiguration config;
+    private @Nullable ScheduledFuture<?> refreshJob;
 
     private List<OilFoxStatusListener> oilFoxStatusListeners = new CopyOnWriteArrayList<>();
 
@@ -75,15 +77,13 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
             String token = thing.getProperties().get(OilFoxBindingConstants.PROPERTY_TOKEN);
             logger.info("Token {}", token);
-            if (token == null || token.equals("")) {
+            if (token == null || token.isEmpty()) {
                 login();
             } else {
                 updateStatus(ThingStatus.ONLINE);
             }
 
-            refreshJob = scheduler.scheduleWithFixedDelay(() -> {
-                ReadStatus();
-            }, 0, config.refreshInterval, TimeUnit.HOURS);
+            refreshJob = scheduler.scheduleWithFixedDelay(this::ReadStatus, 0, config.refreshInterval, TimeUnit.HOURS);
         }
     }
 

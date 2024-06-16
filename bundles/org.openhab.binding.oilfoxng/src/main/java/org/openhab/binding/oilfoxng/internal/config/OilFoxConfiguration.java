@@ -12,15 +12,18 @@
  */
 package org.openhab.binding.oilfoxng.internal.config;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link OilFoxConfiguration} class contains fields mapping thing configuration parameters.
  *
  * @author Jürgen Seliger - Initial contribution
  */
+@NonNullByDefault
 public class OilFoxConfiguration {
 
-    public String hostname;
-    public String email;
-    public String password;
-    public long refreshInterval;
+    public String hostname = "";
+    public String email = "";
+    public String password = "";
+    public long refreshInterval = 8L;
 }

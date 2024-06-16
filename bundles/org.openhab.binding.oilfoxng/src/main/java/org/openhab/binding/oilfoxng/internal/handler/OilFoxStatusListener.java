@@ -12,6 +12,7 @@
  */
 package org.openhab.binding.oilfoxng.internal.handler;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.core.thing.ThingUID;
 
 import com.google.gson.JsonArray;
@@ -21,6 +22,7 @@ import com.google.gson.JsonArray;
  *
  * @author Jürgen Seliger - Initial contribution
  */
+@NonNullByDefault
 public interface OilFoxStatusListener {
 
     /**
