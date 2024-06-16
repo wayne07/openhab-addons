@@ -1,5 +1,14 @@
 /**
- * The {@link OilFoxStatusListener} is notified when an OilFox is added to or removed from the account.
+ * Copyright (c) 2010-2024 Contributors to the openHAB project
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
  */
 package org.openhab.binding.oilfoxng.internal.handler;
 
@@ -7,6 +16,11 @@ import org.openhab.core.thing.ThingUID;
 
 import com.google.gson.JsonArray;
 
+/**
+ * The {@link OilFoxStatusListener} is the interface definition for listening on commands.
+ *
+ * @author Jürgen Seliger
+ */
 public interface OilFoxStatusListener {
 
     /**

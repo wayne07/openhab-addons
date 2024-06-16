@@ -1,3 +1,15 @@
+/**
+ * Copyright (c) 2010-2024 Contributors to the openHAB project
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 package org.openhab.binding.oilfoxng.internal.handler;
 
 import java.io.BufferedWriter;
@@ -33,6 +45,11 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+/**
+ * The {@link OilFoxBridgeHandler} is responsible for handling commands, which are sent to the bridge.
+ *
+ * @author Jürgen Seliger
+ */
 public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
     private final Logger logger = LoggerFactory.getLogger(OilFoxBridgeHandler.class);
@@ -136,7 +153,7 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
             if (responseObject.isJsonObject()) {
                 JsonObject object = responseObject.getAsJsonObject();
                 String token = object.get("token").getAsString();
-                logger.debug("Token " + token);
+                logger.debug("using Token '{}' ", token);
                 thing.setProperty(OilFoxBindingConstants.PROPERTY_TOKEN, token);
             }
 
@@ -149,7 +166,7 @@ public class OilFoxBridgeHandler extends BaseBridgeHandler {
 
     public JsonElement summary(boolean update) throws MalformedURLException, IOException {
         JsonElement responseObject = Query("/v2/user/summary");
-        logger.debug(responseObject.toString());
+        logger.debug("responseObject: {}", responseObject.toString());
 
         // TODO: "id": "UUID",
         // TODO: "firstName": "xxx",

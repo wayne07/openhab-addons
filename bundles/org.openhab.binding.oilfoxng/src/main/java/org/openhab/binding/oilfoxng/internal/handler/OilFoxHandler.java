@@ -1,19 +1,18 @@
 /**
  * Copyright (c) 2010-2024 Contributors to the openHAB project
- * <p>
+ *
  * See the NOTICE file(s) distributed with this work for additional
  * information.
- * <p>
+ *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0
- * <p>
+ *
  * SPDX-License-Identifier: EPL-2.0
  */
 package org.openhab.binding.oilfoxng.internal.handler;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.oilfoxng.OilFoxBindingConstants;
 import org.openhab.core.thing.Bridge;
 import org.openhab.core.thing.ChannelUID;
@@ -26,12 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@link OilFoxHandler} is responsible for handling commands, which are
- * sent to one of the channels.
+ * The {@link OilFoxHandler} is responsible for handling commands, which are sent to one of the channels.
  *
- * @author Jürgen Seliger - Initial contribution
+ * @author Jürgen Seliger
  */
-@NonNullByDefault
 // public class OilFoxHandler extends BaseThingHandler implements OilFoxStatusListener {
 public class OilFoxHandler extends BaseThingHandler {
 

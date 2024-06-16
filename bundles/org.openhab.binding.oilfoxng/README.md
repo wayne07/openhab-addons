@@ -55,5 +55,10 @@ _Provide a full usage example based on textual configuration files (*.things, *.
 
 _Feel free to add additional sections for whatever you think should also be mentioned about your binding!_
 
+see documentation at https://github.com/openhab/openhab-addons
+
 only compile own binding:
-mvn clean package -pl :org.openhab.binding.oilfoxng
+```mvn clean package -pl :org.openhab.binding.oilfoxng```
+
+create a kar file instead of jar:
+```mvn clean install karaf:kar -pl :org.openhab.binding.oilfoxng```
