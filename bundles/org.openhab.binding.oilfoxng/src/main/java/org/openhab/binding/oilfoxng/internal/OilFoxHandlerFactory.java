@@ -31,6 +31,7 @@ import org.openhab.core.thing.binding.BaseThingHandlerFactory;
 import org.openhab.core.thing.binding.ThingHandler;
 import org.openhab.core.thing.binding.ThingHandlerFactory;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,18 @@ public class OilFoxHandlerFactory extends BaseThingHandlerFactory {
         }
         logger.info("creating NO handler");
         return null;
+    }
+
+    @Override
+    protected void activate(ComponentContext componentContext) {
+        logger.info("OilFoxHandlerFactory.activate called with context {} using bundle {} ",
+                componentContext.getBundleContext(), componentContext.getUsingBundle());
+        super.activate(componentContext);
+    }
+
+    @Override
+    protected void deactivate(ComponentContext componentContext) {
+        super.deactivate(componentContext);
     }
 
     private synchronized void registerOilFoxDiscoveryService(OilFoxBridgeHandler bridgeHandler) {
